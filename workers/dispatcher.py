@@ -20,3 +20,19 @@ async def handle_user_message(event: UserMessageEvent, application):
         chat_id=event.chat_id,
         text=event.text.upper()
     )
+
+async def dispatcher(application):
+    """
+    Сам цикл с вызовами основных функций
+    """
+    while True:
+        event = await bus.get()
+        handler = HANDLERS.get(type(event)) # Получаем саму функцию, которая обрабатывает этот ивент
+
+        if handler is None: # Если нет обработчика на такой случай (например на комманду)
+            # TODO тоже логануть
+            bus.task_done() # То закрываем задачу
+            continue
+
+        await handler(event, application) # Вызываем эту функцию
+        bus.task_done() # Завершаем эту задачу
