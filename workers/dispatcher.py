@@ -15,6 +15,9 @@ def register(event_type: Type, handler: Handler):
     """
     HANDLERS[event_type] = handler
 
+async def handle_unknown(event: object, application):
+    logging.info(f"Unhandled event {event}")
+
 async def dispatcher(application):
     """
     Сам цикл с вызовами основных функций
