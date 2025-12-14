@@ -3,8 +3,7 @@ import asyncio
 _event_queue = asyncio.Queue()
 
 async def put(event):
-    event = await _event_queue.put(event)
-    return event
+    await _event_queue.put(event)
 
 async def get():
     event = await _event_queue.get()
