@@ -22,7 +22,7 @@ async def handle_user_message(event: UserMessageEvent, application):
         text=event.text.upper()
     )
 
-async def handle_unknown(event: object, application):
+async def handle_unknown(event: object, application): ...
     # TODO перенести лог неизвестного ивента сюда
 
 async def dispatcher(application):
