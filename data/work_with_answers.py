@@ -1,10 +1,9 @@
 from pathlib import Path
 
-# Папка с данными
 ANSWERS_DIR = Path(__file__).parent / "answers" # текущая папка, где лежит скрипт
 
 def _check_path(filename: str):
-    """Внутренняя проверка: файл должен быть в answers и не сам скрипт"""
+    """Внутренняя проверка: файл должен быть в answers"""
     file_path = ANSWERS_DIR / filename
     file_path = file_path.resolve()  # абсолютный путь
     if not str(file_path).startswith(str(ANSWERS_DIR.resolve())):
@@ -32,5 +31,3 @@ def delete_file(filename: str):
     file_path = _check_path(filename)
     if file_path.exists():
         file_path.unlink()
-
-print(select_files('a'))
