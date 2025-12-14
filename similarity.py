@@ -132,6 +132,5 @@ def ask(question: str, answers, answer_embeddings):
     # Если найден подходящий ответ, возвращаем его и схожесть
     if best_answer:
         return best_answer, round(similarity, 2)
-    else:
-        # Если подходящего ответа нет, возвращаем None и схожесть
-        return None, round(similarity, 2)
+    # Если подходящего ответа нет, возвращаем None и схожесть
+    return None, round(similarity, 2)
