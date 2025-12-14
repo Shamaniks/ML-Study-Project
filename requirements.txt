@@ -1,4 +1,7 @@
 numpy==2.3.5
 python-telegram-bot==22.5
-sentence_transformers==5.2.0
 tensorflow==2.20.0
+torch==2.2.2+cpu
+torchvision==0.17.2+cpu
+torchaudio==2.2.2+cpu
+sentence-transformers==5.2.0
