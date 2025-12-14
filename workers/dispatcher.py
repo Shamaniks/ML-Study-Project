@@ -24,6 +24,7 @@ async def handle_user_message(event: UserMessageEvent, application):
 
 async def handle_unknown(event: object, application): ...
     # TODO перенести лог неизвестного ивента сюда
+    pass
 
 async def dispatcher(application):
     """
