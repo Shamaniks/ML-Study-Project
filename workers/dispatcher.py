@@ -12,17 +12,7 @@ def register(event_type: Type, handler: Handler):
     """
     HANDLERS[event_type] = handler
 
-async def handle_user_message(event: UserMessageEvent, application):
-    """
-    Здесь происходит вызов логики при получении сообщения
-    """
-    print("Произошёл хэндлер")
-    await application.bot.send_message(
-        chat_id=event.chat_id,
-        text=event.text.upper()
-    )
-
-async def handle_unknown(event: object, application): ...
+async def handle_unknown(event: object, application):
     # TODO перенести лог неизвестного ивента сюда
     pass
 
