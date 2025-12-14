@@ -16,10 +16,14 @@ async def handle_user_message(event: UserMessageEvent, application):
     """
     Здесь происходит вызов логики при получении сообщения
     """
+    print("Произошёл хэндлер")
     await application.bot.send_message(
         chat_id=event.chat_id,
         text=event.text.upper()
     )
+
+async def handle_unknown(event: object, application):
+    # TODO перенести лог неизвестного ивента сюда
 
 async def dispatcher(application):
     """
@@ -27,12 +31,6 @@ async def dispatcher(application):
     """
     while True:
         event = await bus.get()
-        handler = HANDLERS.get(type(event)) # Получаем саму функцию, которая обрабатывает этот ивент
-
-        if handler is None: # Если нет обработчика на такой случай (например на комманду)
-            # TODO тоже логануть
-            bus.task_done() # То закрываем задачу
-            continue
-
+        handler = HANDLERS.get(type(event), handle_unknown) # Получаем саму функцию, которая обрабатывает этот ивент
         await handler(event, application) # Вызываем эту функцию
         bus.task_done() # Завершаем эту задачу
