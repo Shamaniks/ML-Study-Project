@@ -5,17 +5,17 @@ from domain.events import UserMessageEvent, CommandEvent
 
 async def put_message(update: Update):
     event = UserMessageEvent(
-        chat_id=update.message.chat_id,
-        user_id=update.message.user_id,
-        text   =update.message.text,
+        chat_id=update.message.chat.id,
+        user_id=update.message.from_user.id,
+        text=update.message.text,
     )
     await put(event)
 
 async def put_command(update: Update):
     event = CommandEvent(
-        chat_id=update.message.chat_id,
-        user_id=update.message.user_id,
-        command=update.message.text,
+        chat_id=update.message.chat.id,
+        user_id=update.message.from_user.id,
+        text=update.message.text,
     )
     await put(event)
 
