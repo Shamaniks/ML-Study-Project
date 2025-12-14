@@ -1,8 +1,11 @@
 import bus
 from domain.events import UserMessageEvent, CommandEvent
 from typing import Type, Callable, Awaitable, Dict
+import logging
+from api.response import answer_to_user
 
-Handler = Callable[[object, object], Awaitable[None]] # Просто типизация на любую функцию
+
+Handler = Callable[[object, object], Awaitable[None]]  # Просто типизация на любую функцию
 HANDLERS: Dict[Type, Handler] = {}
 
 def register(event_type: Type, handler: Handler):
@@ -13,8 +16,7 @@ def register(event_type: Type, handler: Handler):
     HANDLERS[event_type] = handler
 
 async def handle_unknown(event: object, application):
-    # TODO перенести лог неизвестного ивента сюда
-    pass
+    logging.info(f"Unhandled event {event}")
 
 async def dispatcher(application):
     """
@@ -24,4 +26,4 @@ async def dispatcher(application):
         event = await bus.get()
         handler = HANDLERS.get(type(event), handle_unknown) # Получаем саму функцию, которая обрабатывает этот ивент
         await handler(event, application) # Вызываем эту функцию
-        bus.task_done() # Завершаем эту задачу
+        bus.task_done()  # Завершаем эту задачу
