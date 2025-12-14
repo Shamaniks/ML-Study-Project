@@ -1,8 +1,11 @@
 import bus
 from domain.events import UserMessageEvent, CommandEvent
 from typing import Type, Callable, Awaitable, Dict
+import logging
+from api.response import answer_to_user
 
-Handler = Callable[[object, object], Awaitable[None]] # Просто типизация на любую функцию
+
+Handler = Callable[[object, object], Awaitable[None]]  # Просто типизация на любую функцию
 HANDLERS: Dict[Type, Handler] = {}
 
 def register(event_type: Type, handler: Handler):
@@ -20,6 +23,9 @@ async def handle_user_message(event: UserMessageEvent, application):
         chat_id=event.chat_id,
         text=event.text.upper()
     )
+    logging.info(f"Calling the system when message{event} has been got")
+
+    answer_to_user()
 
 async def dispatcher(application):
     """
@@ -31,8 +37,9 @@ async def dispatcher(application):
 
         if handler is None: # Если нет обработчика на такой случай (например на комманду)
             # TODO тоже логануть
-            bus.task_done() # То закрываем задачу
+            logging.info(f"for {event} there is no handler.")
+            bus.task_done()  # То закрываем задачу
             continue
 
         await handler(event, application) # Вызываем эту функцию
-        bus.task_done() # Завершаем эту задачу
+        bus.task_done()  # Завершаем эту задачу
