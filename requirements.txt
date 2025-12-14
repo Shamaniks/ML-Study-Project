@@ -1,1 +1,4 @@
+numpy==2.3.5
 python-telegram-bot==22.5
+sentence_transformers==5.2.0
+tensorflow==2.20.0
