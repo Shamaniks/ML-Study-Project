@@ -28,5 +28,3 @@ def delete_file(filename: str):
     file_path = _check_path(filename)
     if file_path.exists():
         file_path.unlink()
-
-add_file('test.txt', 'hi')
