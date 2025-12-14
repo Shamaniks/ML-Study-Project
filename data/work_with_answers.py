@@ -11,6 +11,10 @@ def _check_path(filename: str):
         raise ValueError("Файл должен быть внутри папки answers")
     return file_path
 
+def select_files(pattern: str):
+    """Ищет файлы в answers, имя которых содержит pattern"""
+    return [f.name for f in ANSWERS_DIR.iterdir() if pattern in f.name]
+
 def add_file(filename: str, content: str):
     """Создать новый файл или перезаписать существующий"""
     file_path = _check_path(filename)
@@ -28,3 +32,5 @@ def delete_file(filename: str):
     file_path = _check_path(filename)
     if file_path.exists():
         file_path.unlink()
+
+print(select_files('a'))
