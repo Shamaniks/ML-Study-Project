@@ -15,7 +15,7 @@ async def put_command(update: Update):
     event = CommandEvent(
         chat_id=update.message.chat.id,
         user_id=update.message.from_user.id,
-        text=update.message.text,
+        command=update.message.text,
     )
     await put(event)
 
